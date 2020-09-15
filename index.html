@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <script>
+        
+        // Global Variable
+        const choices = ['ROCK', 'PAPER', 'SCISSORS']
+        let computerPoints = 0
+        let playerPoints = 0
+        let gameCounter = 0
+
+        // Reset score function
+        function resetGame(){
+            computerPoints = playerPoints = gameCounter = 0
+            return
+        }
+
+        // Checks for invalid data entered by player
+        function checkSelection(playerChoice){
+            if(playerChoice === 'ROCK' || playerChoice === 'PAPER' || playerChoice === 'SCISSORS'){
+                return true
+            }
+            return false
+        }
+
+        // Computer's random choice function
+        function computerPlay(){
+            
+            let choiceSelector = Math.floor(Math.random() * choices.length)
+            let computerChoice = choices[choiceSelector]
+            return computerChoice
+        }
+        
+        // Player's input function
+        function playerPlay(){
+            let playerChoice = prompt('Please select: rock, paper, scissors')
+            let errorChoice = 'You have exceeded the number of tries!'
+            for(let i = 1; i <3; i++){
+                if (checkSelection(playerChoice.toUpperCase()) === true){
+                    return playerChoice.toUpperCase()
+                } else playerChoice = prompt('Invalid Selection! Please try again : rock paper scissors')
+
+            }
+            return console.log(errorChoice)            
+        }
+
+        // Function for a Round, results and game counting
+        function playRound(playerSelection, computerSelection){
+            let resultWin = 'You Win! ' + playerSelection.toLowerCase() + ' beats ' + computerSelection.toLowerCase()
+            let resultLose = 'You Lose! ' + computerSelection.toLowerCase() + ' beats ' + playerSelection.toLowerCase()
+            // Player matches computer's selection
+            if( playerSelection === computerSelection){
+                gameCounter++
+                return console.log('Its Tie!')
+            } 
+            // Player selects rock
+            else if(playerSelection === choices[0]){
+                gameCounter++
+                if (computerSelection === choices[1]){
+                    computerPoints++
+                    return console.log(resultLose)
+                } else {
+                    playerPoints++
+                    return console.log(resultWin)
+                }
+            }
+            // Player selects paper
+            else if(playerSelection === choices[1]){
+                gameCounter++
+                if(computerSelection === choices[2]){
+                    computerPoints++
+                    return console.log(resultLose)
+                }else{
+                    playerPoints++
+                    return console.log(resultWin)
+                }
+            }
+            // Player selects scissors
+            else if(playerSelection === choices[2]){
+                gameCounter++
+                if(computerSelection === choices[0]){
+                    computerPoints++
+                    return console.log(resultLose)
+                }else{
+                    playerPoints++
+                    return console.log(resultWin)
+                }
+            }
+        }
+
+        // Game function for 5 rounds
+        
+        function game(){
+            resetGame()             
+            while(gameCounter<5){                
+                playRound(playerPlay(), computerPlay())
+            }
+
+            let finalResult = 'Computer points: ' + computerPoints + ' Player points: ' + playerPoints
+            win = '\nCongratulations! You are Winner'
+            lose = '\nYou lose! Better luck next time'
+
+            if(playerPoints < computerPoints){    
+                console.log(finalResult + lose)
+            }else if(playerPoints > computerPoints){
+                console.log(finalResult + win)
+            }else{
+                console.log('Game result is draw!')
+            }
+        }
+
+        game()
+
+        
+
+
+
+    </script>
+</body>
+</html>
